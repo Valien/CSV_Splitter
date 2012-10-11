@@ -11,9 +11,9 @@ using System.IO;
 
 namespace WindowsFormsApplication1
 {
-    public partial class CVSSplitterForm : Form
+    public partial class CSVSplitterForm : Form
     {
-        public CVSSplitterForm()
+        public CSVSplitterForm()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1
 {
-    partial class CVSSplitterForm
+    partial class CSVSplitterForm
     {
         /// <summary>
         /// Required designer variable.
