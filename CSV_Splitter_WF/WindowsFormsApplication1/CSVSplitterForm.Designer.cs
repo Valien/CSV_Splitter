@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace CSVSplitter
 {
     partial class CSVSplitterForm
     {
@@ -70,14 +70,34 @@
             // 
             // nol_NumericUpDown
             // 
+            this.nol_NumericUpDown.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nol_NumericUpDown.Location = new System.Drawing.Point(103, 58);
+            this.nol_NumericUpDown.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
             this.nol_NumericUpDown.Name = "nol_NumericUpDown";
             this.nol_NumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.nol_NumericUpDown.TabIndex = 3;
+            this.nol_NumericUpDown.Value = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
             // 
             // maxPieces_NumericUpDown
             // 
             this.maxPieces_NumericUpDown.Location = new System.Drawing.Point(103, 88);
+            this.maxPieces_NumericUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.maxPieces_NumericUpDown.Name = "maxPieces_NumericUpDown";
             this.maxPieces_NumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.maxPieces_NumericUpDown.TabIndex = 4;
@@ -107,6 +127,7 @@
             this.splitNow_Button.TabIndex = 7;
             this.splitNow_Button.Text = "Split Now!";
             this.splitNow_Button.UseVisualStyleBackColor = true;
+            this.splitNow_Button.Click += new System.EventHandler(this.splitNow_Button_Click);
             // 
             // cancel_Button
             // 
@@ -116,8 +137,9 @@
             this.cancel_Button.TabIndex = 8;
             this.cancel_Button.Text = "Cancel";
             this.cancel_Button.UseVisualStyleBackColor = true;
+            this.cancel_Button.Click += new System.EventHandler(this.cancel_Button_Click);
             // 
-            // CVSSplitterForm
+            // CSVSplitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -131,7 +153,7 @@
             this.Controls.Add(this.maxPiecesLabel);
             this.Controls.Add(this.nolLabel);
             this.Controls.Add(this.csvLabel);
-            this.Name = "CVSSplitterForm";
+            this.Name = "CSVSplitterForm";
             this.Text = "CVS Splitter";
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPieces_NumericUpDown)).EndInit();
