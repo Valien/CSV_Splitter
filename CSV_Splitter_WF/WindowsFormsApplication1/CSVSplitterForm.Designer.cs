@@ -37,6 +37,7 @@
             this.browse_Button = new System.Windows.Forms.Button();
             this.splitNow_Button = new System.Windows.Forms.Button();
             this.cancel_Button = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPieces_NumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -139,11 +140,19 @@
             this.cancel_Button.UseVisualStyleBackColor = true;
             this.cancel_Button.Click += new System.EventHandler(this.cancel_Button_Click);
             // 
+            // lblStatus
+            // 
+            this.lblStatus.Location = new System.Drawing.Point(66, 129);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(300, 16);
+            this.lblStatus.TabIndex = 9;
+            // 
             // CSVSplitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 162);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.cancel_Button);
             this.Controls.Add(this.splitNow_Button);
             this.Controls.Add(this.browse_Button);
@@ -173,6 +182,7 @@
         private System.Windows.Forms.Button splitNow_Button;
         private System.Windows.Forms.Button cancel_Button;
         internal System.Windows.Forms.Button browse_Button;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 
