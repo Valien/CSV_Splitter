@@ -44,7 +44,7 @@ namespace CSVSplitter
             // Start splitting!
             int FileIndex = 0;
 
-            while (true)
+            do
             {
                 // Update progress
                 FileIndex += 1;
@@ -61,82 +61,37 @@ namespace CSVSplitter
 
                 // Create new file to store a piece of the CSV file
                 string PiecePath = OutputFolder + "\\" + Path.GetFileNameWithoutExtension(FilePath) + "_" + FileIndex + Path.GetExtension(FilePath);
-                StreamWriter Writer = new StreamWriter(PiecePath, false);
-                Writer.AutoFlush = false;
-                Writer.WriteLine(strHeader);
-
-                // Read and write precise number of rows
-                for (int i = 0; i < LineCount; i++)
+                using (StreamWriter Writer = new StreamWriter(PiecePath, false))
                 {
-                    string s = Reader.ReadLine();
-                    if ((s != null) & (_IsAbort = false))
+                    Writer.AutoFlush = false;
+                    Writer.WriteLine(strHeader);
+
+
+                    // Read and write precise number of rows
+                    for (int i = 0; i < LineCount; i++)
                     {
-                        Writer.WriteLine(s);
+                        string s = Reader.ReadLine();
+                        if ((s != null) & (_IsAbort = false))
+                        {
+                            Writer.WriteLine(s);
+                        }
+                        else
+                        {
+                            //Writer.Flush();
+                            //Writer.Close();
+                            break;
+                        }
                     }
-                    else
-                    {
-                        Writer.Flush();
-                        Writer.Close();
-                        break;
-                    }
+
+                    // flush and close the split file
+                    //Writer.Flush();
+                    //Writer.Close();
                 }
 
-
-            }
-                // flush and close the split file
-                Writer.Flush();
-                Writer.Close();
-            //do
-            //{
-            //    // Update progress
-            //    FileIndex += 1;
-            //    if ((UpdateProgress != null))
-            //    {
-            //        UpdateProgress.Invoke((FileIndex - 1) * LineCount);
-            //    }
-
-            //    // Check if the number of split files do not exceed the limit
-            //    if ((MaxOutputFile < FileIndex) & (MaxOutputFile > 0))
-            //    {
-            //        break;
-            //    }
-
-            //    // Create new file to store a piece of the CSV file
-            //    string PiecePath = OutputFolder + "\\" + Path.GetFileNameWithoutExtension(FilePath) + "_" + FileIndex + Path.GetExtension(FilePath);
-            //    StreamWriter Writer = new StreamWriter(PiecePath, false);
-            //    Writer.AutoFlush = false;
-            //    Writer.WriteLine(strHeader);
-
-            //    // Read and write precise number of rows
-            //    for (int i = 0; i < LineCount; i++)
-            //    {
-            //        string s = Reader.ReadLine();
-            //        if ((s != null) & (_IsAbort = false))
-            //        {
-            //            Writer.WriteLine(s);
-            //        }
-            //        else
-            //        {
-            //            Writer.Flush();
-            //            Writer.Close();
-            //            break;
-            //        }
-            //    }
-
-            //    // flush and close the split file
-            //    //Writer.Flush();
-            //    //Writer.Close();
-
-            //} while (true);
+            } while (true);
 
             Reader.Close();
         }
-
-        //private void SplitCSV(string p1, decimal p2, decimal p3, Action<int> UpdateProgress, bool _IsAbort)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
 
         private void browse_Button_Click(object sender, EventArgs e)
         {
@@ -162,8 +117,8 @@ namespace CSVSplitter
         public void SplitIt()
         {
 
-            splitNow_Button.Enabled = false;
-            cancel_Button.Enabled = true;
+            //splitNow_Button.Enabled = false;
+            //cancel_Button.Enabled = true;
 
             // Kick it off!
             try
@@ -193,20 +148,17 @@ namespace CSVSplitter
 
             finally
             {
-                splitNow_Button.Enabled = true;
-                cancel_Button.Enabled = false;
+                //splitNow_Button.Enabled = true;
+               // cancel_Button.Enabled = false;
             }
 
 
         }
-
-
 
         public void UpdateProgress(int CurrentLine)
         {
             lblStatus.Text = "Approximately " + CurrentLine.ToString() + " lines have been split.";
         }
 
-      
     }
 }
