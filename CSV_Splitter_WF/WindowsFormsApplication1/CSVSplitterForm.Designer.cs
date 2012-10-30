@@ -38,6 +38,8 @@
             this.splitNow_Button = new System.Windows.Forms.Button();
             this.cancel_Button = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPieces_NumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -147,11 +149,25 @@
             this.lblStatus.Size = new System.Drawing.Size(300, 16);
             this.lblStatus.TabIndex = 9;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(103, 162);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(245, 23);
+            this.progressBar1.TabIndex = 10;
+            // 
             // CSVSplitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 162);
+            this.ClientSize = new System.Drawing.Size(484, 197);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.cancel_Button);
             this.Controls.Add(this.splitNow_Button);
@@ -183,6 +199,8 @@
         private System.Windows.Forms.Button cancel_Button;
         internal System.Windows.Forms.Button browse_Button;
         private System.Windows.Forms.Label lblStatus;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
