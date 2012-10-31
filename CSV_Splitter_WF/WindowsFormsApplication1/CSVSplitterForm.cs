@@ -47,10 +47,9 @@ namespace CSVSplitter
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 csv_TextBox.Text = OFD.FileName.ToString();
-                // clean this up - counting how many lines are in the CSV file initially
-                string countLines = OFD.FileName.ToString();
-                string countResult = CountCSVLines(countLines).ToString();
-                lblStatus.Text = countResult;
+                // clean this up - counting how many lines are in the CSV file initially 
+                string countResult = CountCSVLines(OFD.FileName.ToString()).ToString();
+                lblStatus.Text = "There are " + countResult + " lines in this CSV file.";
             }
         }
      

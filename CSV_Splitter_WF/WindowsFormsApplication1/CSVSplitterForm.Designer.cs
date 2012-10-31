@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CSVSplitterForm));
             this.csvLabel = new System.Windows.Forms.Label();
             this.nolLabel = new System.Windows.Forms.Label();
             this.maxPiecesLabel = new System.Windows.Forms.Label();
@@ -144,9 +145,9 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(66, 129);
+            this.lblStatus.Location = new System.Drawing.Point(100, 127);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(300, 16);
+            this.lblStatus.Size = new System.Drawing.Size(248, 16);
             this.lblStatus.TabIndex = 9;
             // 
             // backgroundWorker1
@@ -178,6 +179,7 @@
             this.Controls.Add(this.maxPiecesLabel);
             this.Controls.Add(this.nolLabel);
             this.Controls.Add(this.csvLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CSVSplitterForm";
             this.Text = "CVS Splitter";
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).EndInit();
