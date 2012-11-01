@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CSVSplitterForm));
             this.csvLabel = new System.Windows.Forms.Label();
             this.nolLabel = new System.Windows.Forms.Label();
@@ -41,6 +42,9 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.toolTipMaxPieces = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipNumberOfLines = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipCSVFile = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPieces_NumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -88,6 +92,8 @@
             this.nol_NumericUpDown.Name = "nol_NumericUpDown";
             this.nol_NumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.nol_NumericUpDown.TabIndex = 3;
+            this.nol_NumericUpDown.ThousandsSeparator = true;
+            this.toolTipNumberOfLines.SetToolTip(this.nol_NumericUpDown, "Let\'s you choose how many lines per CSV file you want split.");
             this.nol_NumericUpDown.Value = new decimal(new int[] {
             50000,
             0,
@@ -102,9 +108,21 @@
             0,
             0,
             0});
+            this.maxPieces_NumericUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.maxPieces_NumericUpDown.Name = "maxPieces_NumericUpDown";
             this.maxPieces_NumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.maxPieces_NumericUpDown.TabIndex = 4;
+            this.toolTipMaxPieces.SetToolTip(this.maxPieces_NumericUpDown, "The number of pieces you want your CSV file to be split into. \r\n\r\nThe minimum is " +
+        "2 split pieces.");
+            this.maxPieces_NumericUpDown.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // csv_TextBox
             // 
@@ -112,6 +130,7 @@
             this.csv_TextBox.Name = "csv_TextBox";
             this.csv_TextBox.Size = new System.Drawing.Size(245, 20);
             this.csv_TextBox.TabIndex = 5;
+            this.toolTipCSVFile.SetToolTip(this.csv_TextBox, "Select the .CSV file that you need split.");
             // 
             // browse_Button
             // 
@@ -119,7 +138,7 @@
             this.browse_Button.Name = "browse_Button";
             this.browse_Button.Size = new System.Drawing.Size(75, 23);
             this.browse_Button.TabIndex = 6;
-            this.browse_Button.Text = "Browse File";
+            this.browse_Button.Text = "Select File";
             this.browse_Button.UseVisualStyleBackColor = true;
             this.browse_Button.Click += new System.EventHandler(this.browse_Button_Click);
             // 
@@ -163,6 +182,22 @@
             this.progressBar1.Size = new System.Drawing.Size(245, 23);
             this.progressBar1.TabIndex = 10;
             // 
+            // toolTipMaxPieces
+            // 
+            this.toolTipMaxPieces.Tag = "";
+            this.toolTipMaxPieces.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTipMaxPieces.ToolTipTitle = "Max Pieces";
+            // 
+            // toolTipNumberOfLines
+            // 
+            this.toolTipNumberOfLines.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTipNumberOfLines.ToolTipTitle = "Number of Lines";
+            // 
+            // toolTipCSVFile
+            // 
+            this.toolTipCSVFile.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTipCSVFile.ToolTipTitle = "CSV File";
+            // 
             // CSVSplitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,7 +216,7 @@
             this.Controls.Add(this.csvLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CSVSplitterForm";
-            this.Text = "CVS Splitter";
+            this.Text = "CSV Splitter";
             ((System.ComponentModel.ISupportInitialize)(this.nol_NumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxPieces_NumericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -203,6 +238,9 @@
         private System.Windows.Forms.Label lblStatus;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolTip toolTipMaxPieces;
+        private System.Windows.Forms.ToolTip toolTipNumberOfLines;
+        private System.Windows.Forms.ToolTip toolTipCSVFile;
     }
 }
 

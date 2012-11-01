@@ -41,14 +41,16 @@ namespace CSVSplitter
             }
         }
         // Browse file button
+        string countResult;
+
         private void browse_Button_Click(object sender, EventArgs e)
         {
 
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 csv_TextBox.Text = OFD.FileName.ToString();
-                // clean this up - counting how many lines are in the CSV file initially 
-                string countResult = CountCSVLines(OFD.FileName.ToString()).ToString();
+                // counting how many lines are in the CSV file initially 
+                countResult = CountCSVLines(OFD.FileName.ToString()).ToString("N3");
                 lblStatus.Text = "There are " + countResult + " lines in this CSV file.";
             }
         }
@@ -63,11 +65,9 @@ namespace CSVSplitter
             {
                 backgroundWorker1.RunWorkerAsync();
                 //SplitIt();
+                splitNow_Button.Enabled = false;
             }
-            //this.Enabled = false;
-            //cancel_Button.Enabled = true;
-           
-
+            
         }
   
         // Cancel button
@@ -78,7 +78,8 @@ namespace CSVSplitter
             if (backgroundWorker1.WorkerSupportsCancellation == true)
             {
                 backgroundWorker1.CancelAsync();
-                // this.Close(); -- close the application if a user cancels? Maybe not...
+                splitNow_Button.Enabled = true;
+                
             }
         }
 
@@ -163,11 +164,9 @@ namespace CSVSplitter
             try
             {
                 //Split SplitCSV = new Split();
-
                 //SplitCSV(csv_TextBox.Text, nol_NumericUpDown.Value, maxPieces_NumericUpDown.Value, UpdateProgress, _IsAbort);
 
                 SplitCSV(csv_TextBox.Text, (int)nol_NumericUpDown.Value, (int)maxPieces_NumericUpDown.Value);
-
 
                 //if (!_IsAbort)
                 //{
@@ -201,30 +200,35 @@ namespace CSVSplitter
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            for (int i = 0; i < countResult.Length; i++)//CountCSVLines(OFD.FileName.ToString())
+            {
 
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-                //break;
-            }
-            else
-            {
-                SplitIt();
-                //worker.ReportProgress
+
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    SplitIt();
+                    worker.ReportProgress(i * 10);
+                }
             }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblStatus.Text = (e.ProgressPercentage.ToString() + "%");
-            this.progressBar1.Value = e.ProgressPercentage;
+            progressBar1.Value = e.ProgressPercentage;
+            progressBar1.Update();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)
             {
-                lblStatus.Text = "Split Cancelled.";
+                lblStatus.Text = "Split Canceled.";
             }
             else if (e.Error != null)
             {
@@ -233,9 +237,11 @@ namespace CSVSplitter
             else
             {
                 lblStatus.Text = "Split complete!";
+                splitNow_Button.Enabled = true;
             }
 
         }
+
 
     }
 }
