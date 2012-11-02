@@ -89,6 +89,11 @@
             0,
             0,
             0});
+            this.nol_NumericUpDown.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.nol_NumericUpDown.Name = "nol_NumericUpDown";
             this.nol_NumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.nol_NumericUpDown.TabIndex = 3;
@@ -154,6 +159,7 @@
             // 
             // cancel_Button
             // 
+            this.cancel_Button.Enabled = false;
             this.cancel_Button.Location = new System.Drawing.Point(381, 85);
             this.cancel_Button.Name = "cancel_Button";
             this.cancel_Button.Size = new System.Drawing.Size(75, 23);
@@ -164,9 +170,9 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(100, 127);
+            this.lblStatus.Location = new System.Drawing.Point(17, 116);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(248, 16);
+            this.lblStatus.Size = new System.Drawing.Size(439, 40);
             this.lblStatus.TabIndex = 9;
             // 
             // backgroundWorker1
@@ -180,6 +186,7 @@
             this.progressBar1.Location = new System.Drawing.Point(103, 162);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(245, 23);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 10;
             // 
             // toolTipMaxPieces
