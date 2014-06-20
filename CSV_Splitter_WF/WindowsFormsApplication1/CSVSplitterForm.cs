@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 
@@ -45,7 +46,6 @@ namespace CSVSplitter
 
         private void browse_Button_Click(object sender, EventArgs e)
         {
-
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 csv_TextBox.Text = OFD.FileName.ToString();
@@ -58,14 +58,23 @@ namespace CSVSplitter
         // Start button
         private void splitNow_Button_Click(object sender, EventArgs e)
         {
-
-            if (backgroundWorker1.IsBusy != true)
+            // Making sure someone actually inputs a file to be split.
+            if (csv_TextBox.Text.Length == 0)
             {
-                backgroundWorker1.RunWorkerAsync();
-                splitNow_Button.Enabled = false;
-                cancel_Button.Enabled = true;
+                MessageBox.Show("Please input a .CSV file before splitting.", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                backgroundWorker1.CancelAsync();
+                splitNow_Button.Enabled = true;
             }
-
+            else
+            {
+                if (backgroundWorker1.IsBusy != true)
+                {
+                    backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+                    backgroundWorker1.RunWorkerAsync();
+                    splitNow_Button.Enabled = false;
+                    cancel_Button.Enabled = true;
+                }
+            }
         }
 
         // Cancel button
@@ -79,9 +88,12 @@ namespace CSVSplitter
             }
         }
 
-        private void SplitCSV(string FilePath, int LineCount, int MaxOutputFile)
+        private void SplitCSV(string FilePath, int LineCount, int MaxOutputFile, Action<int> UpdateProgress)
         //private void SplitCSV(string FilePath, int LineCount, int MaxOutputFile, Action<int> UpdateProgress, bool IsAbort)
         {
+            // variables
+            int parse;
+
             //BackgroundWorker worker =  as BackgroundWorker;
 
             // Validate first
@@ -128,6 +140,18 @@ namespace CSVSplitter
                         if (s != null)
                         {
                             Writer.WriteLine(s);
+                            //Int32.TryParse(countResult, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out parse);
+                            if (Int32.TryParse(countResult, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out parse))
+                            {
+                                //double p = (double)i / parse;
+                                //UpdateProgress((int)p);
+                                //backgroundWorker1.ReportProgress((int)p);
+                                int progress = parse / 10;
+                                for (int pr = progress; pr < parse; pr+=progress)
+                                {
+                                    UpdateProgress((int)pr);
+                                }
+                            }
                             //worker.ReportProgress(i * 10);
                         }
                         else
@@ -172,6 +196,11 @@ namespace CSVSplitter
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            //for (int i = 0; i <= 100; i++)
+            //{
+            //    Thread.Sleep(100);
+            //    backgroundWorker1.ReportProgress(i);
+            //}
             BackgroundWorker worker = sender as BackgroundWorker;
             for (int i = 0; i < maxPieces_NumericUpDown.Value; i++)//CountCSVLines(OFD.FileName.ToString())
             {
@@ -185,12 +214,13 @@ namespace CSVSplitter
                     //SplitIt();
                     try
                     {
-                        SplitCSV(csv_TextBox.Text, (int)nol_NumericUpDown.Value, (int)maxPieces_NumericUpDown.Value);
+                        SplitCSV(csv_TextBox.Text, (int)nol_NumericUpDown.Value, (int)maxPieces_NumericUpDown.Value, backgroundWorker1.ReportProgress);
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Unable to split the CSV file. Reason: " + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         //throw;
+                        //lblStatus.Text = "Unable to split the CSV file. Reason: " + ex.Message + MessageBoxIcon.Warning;
                     }
                 }
             }
@@ -198,14 +228,28 @@ namespace CSVSplitter
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            
+
             // few ideas to show the progress -- count total # of lines and return progress based on each block of lines completed
             // count current progress of lines and show progress that way.
             // take - linecount / total lines (50K/135K) * 100 = 37%) -- return that result?
 
             //lblStatus.Text = (e.ProgressPercentage.ToString() + "%");
+            //lblStatus.Text = "Hello World!";
+            //if (e.UserState != null)
+            //{
+            //    SplitFileMessage msg = (SplitFileMessage)e.UserState;
 
-            // progressBar1.Value = e.ProgressPercentage;
+            //    if (msg.MessageType == SplitFileMessage.MSG_TYPE_ERR)
+            //    {
+            //        throw new Exception(msg.Message);
+            //    }
+            //    else
+            //    {
+            //        this.lblStatus.Text += msg.Message + Environment.NewLine;
+            //    }
+            //}
+            progressBar1.Value = e.ProgressPercentage;
+            //this.Text = e.ProgressPercentage.ToString();
             //progressBar1.Update();
         }
 
@@ -227,7 +271,34 @@ namespace CSVSplitter
             }
 
         }
+    }
 
+    //
+    public class SplitFileMessage
+    {
+        public const int MSG_TYPE_INFO = 1;
+        public const int MSG_TYPE_ERR = 2;
 
+        private int _MessageType;
+
+        public int MessageType
+        {
+            get { return _MessageType; }
+            set { _MessageType = value; }
+        }
+
+        private string _Message;
+
+        public string Message
+        {
+            get { return _Message; }
+            set { _Message = value; }
+        }
+
+        public SplitFileMessage(int MessageType, string Message)
+        {
+            this.MessageType = MessageType;
+            this.Message = Message;
+        }
     }
 }
