@@ -184,7 +184,7 @@
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(103, 162);
-            this.progressBar1.Maximum = 136000;
+            this.progressBar1.Maximum = 10000000;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(245, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
